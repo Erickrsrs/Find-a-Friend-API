@@ -9,3 +9,73 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Age {
+  BABY
+  ADULT
+  SENIOR
+}
+
+enum Size {
+  TINY
+  MEDIUM
+  LARGE
+}
+
+enum Energy {
+  LOW
+  MODERATE
+  HIGH
+}
+
+enum Idependence_level {
+  DEPENDENT
+  INDEPENDENT
+  SELF_SUFFICIENT
+}
+
+//TODO: add images feature
+model Pet {
+  id                 String            @id @default(uuid())
+  species            String
+  race               String?
+  name               String
+  about              String?
+  age                Age
+  size               Size
+  energy             Energy
+  independence_level Idependence_level
+  requirements       String[]
+  created_at         DateTime          @default(now())
+
+  organization    Organization @relation(fields: [organization_id], references: [id])
+  organization_id String
+
+  @@map("pets")
+}
+
+model Organization {
+  id            String   @id @default(uuid())
+  name          String
+  manager_name  String
+  email         String
+  CEP           String
+  address       String
+  whatsapp      String
+  password_hash String
+  created_at    DateTime @default(now())
+
+  Pet Pet[]
+
+  @@map("organizations")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String
+  password_hash String
+  created_at    DateTime @default(now())
+
+  @@map("users")
+}
