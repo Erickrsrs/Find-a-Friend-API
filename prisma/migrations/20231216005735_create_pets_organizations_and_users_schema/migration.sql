@@ -8,7 +8,7 @@ CREATE TYPE "Size" AS ENUM ('TINY', 'MEDIUM', 'LARGE');
 CREATE TYPE "Energy" AS ENUM ('LOW', 'MODERATE', 'HIGH');
 
 -- CreateEnum
-CREATE TYPE "Idependence_level" AS ENUM ('DEPENDENT', 'INDEPENDENT', 'SELF_SUFFICIENT');
+CREATE TYPE "IndependenceLevel" AS ENUM ('DEPENDENT', 'INDEPENDENT', 'SELF_SUFFICIENT');
 
 -- CreateTable
 CREATE TABLE "pets" (
@@ -20,7 +20,7 @@ CREATE TABLE "pets" (
     "age" "Age" NOT NULL,
     "size" "Size" NOT NULL,
     "energy" "Energy" NOT NULL,
-    "independence_level" "Idependence_level" NOT NULL,
+    "independence_level" "IndependenceLevel" NOT NULL,
     "requirements" TEXT[],
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "organization_id" TEXT NOT NULL,

@@ -28,7 +28,7 @@ enum Energy {
   HIGH
 }
 
-enum Idependence_level {
+enum IndependenceLevel {
   DEPENDENT
   INDEPENDENT
   SELF_SUFFICIENT
@@ -44,7 +44,7 @@ model Pet {
   age                Age
   size               Size
   energy             Energy
-  independence_level Idependence_level
+  independence_level IndependenceLevel
   requirements       String[]
   created_at         DateTime          @default(now())
 
@@ -54,6 +54,7 @@ model Pet {
   @@map("pets")
 }
 
+//TODO: validade and get address from CEP
 model Organization {
   id            String   @id @default(uuid())
   name          String
