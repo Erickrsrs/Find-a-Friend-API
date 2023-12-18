@@ -34,7 +34,7 @@ enum IndependenceLevel {
   SELF_SUFFICIENT
 }
 
-//TODO: add images feature
+//TODO: add images feature, add address feature to maximize performance
 model Pet {
   id                 String            @id @default(uuid())
   species            String
@@ -54,7 +54,6 @@ model Pet {
   @@map("pets")
 }
 
-//TODO: validade and get address from CEP
 model Organization {
   id            String   @id @default(uuid())
   name          String
