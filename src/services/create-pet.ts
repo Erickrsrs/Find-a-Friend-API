@@ -27,10 +27,10 @@ export class CreatePetService {
   ) {}
 
   async execute({
-    ...data
+    ...createPetData
   }: CreatePetServiceRequest): Promise<CreatePetServiceResponse> {
     const organization = await this.organizationsRepository.findById(
-      data.organization_id,
+      createPetData.organization_id,
     )
 
     if (!organization) {
@@ -39,12 +39,12 @@ export class CreatePetService {
 
     const { address } = organization
 
-    const petDataWithAddress = {
-      ...data,
+    const createPetDataWithAddress = {
+      ...createPetData,
       address,
     }
 
-    const pet = await this.petsRepository.create(petDataWithAddress)
+    const pet = await this.petsRepository.create(createPetDataWithAddress)
     return { pet }
   }
 }

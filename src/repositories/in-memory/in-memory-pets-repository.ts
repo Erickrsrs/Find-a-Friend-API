@@ -1,6 +1,7 @@
 import { Pet, Prisma } from '@prisma/client'
 import { randomUUID } from 'node:crypto'
 import { PetsRepository } from '../pets-repository'
+import { FilterPetsByAttributesServiceRequest } from '@/services/filter-pets-by-attributes'
 
 export class InMemoryPetsRepository implements PetsRepository {
   public items: Pet[] = []
@@ -17,6 +18,19 @@ export class InMemoryPetsRepository implements PetsRepository {
 
       return (
         cityMatch && cityMatch[1].trim().toLowerCase() === city.toLowerCase()
+      )
+    })
+  }
+
+  async filterByAttributes(filter: FilterPetsByAttributesServiceRequest) {
+    return this.items.filter((pet) => {
+      return (
+        (!filter.species || pet.species === filter.species) &&
+        (!filter.age || pet.age === filter.age) &&
+        (!filter.size || pet.size === filter.size) &&
+        (!filter.energy || pet.energy === filter.energy) &&
+        (!filter.independence_level ||
+          pet.independence_level === filter.independence_level)
       )
     })
   }
