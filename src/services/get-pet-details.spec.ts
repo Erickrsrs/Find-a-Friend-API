@@ -23,6 +23,7 @@ describe('get pet details service', () => {
       energy: 'LOW',
       independence_level: 'DEPENDENT',
       requirements: ['needs a lot of love'],
+      address: "pet's address",
       organization_id: 'org-id',
     })
 
