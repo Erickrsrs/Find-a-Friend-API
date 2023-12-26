@@ -9,6 +9,18 @@ export class InMemoryPetsRepository implements PetsRepository {
     return this.items.find((pet) => pet.id === id) ?? null
   }
 
+  async findByCity(city: string) {
+    const cityRegex = /[^,]*,\s*([^,-]*)\s*-/
+
+    return this.items.filter((pet) => {
+      const cityMatch = pet.address.match(cityRegex)
+
+      return (
+        cityMatch && cityMatch[1].trim().toLowerCase() === city.toLowerCase()
+      )
+    })
+  }
+
   async create(data: Prisma.PetUncheckedCreateInput) {
     const pet = {
       id: randomUUID(),
@@ -24,6 +36,7 @@ export class InMemoryPetsRepository implements PetsRepository {
 
       requirements: (data.requirements as string[]) || [],
       organization_id: data.organization_id,
+      address: data.address,
       created_at: new Date(),
     }
 

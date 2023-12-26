@@ -22,6 +22,7 @@ CREATE TABLE "pets" (
     "energy" "Energy" NOT NULL,
     "independence_level" "IndependenceLevel" NOT NULL,
     "requirements" TEXT[],
+    "address" TEXT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "organization_id" TEXT NOT NULL,
 

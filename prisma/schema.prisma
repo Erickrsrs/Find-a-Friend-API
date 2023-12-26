@@ -46,6 +46,7 @@ model Pet {
   energy             Energy
   independence_level IndependenceLevel
   requirements       String[]
+  address            String
   created_at         DateTime          @default(now())
 
   organization    Organization @relation(fields: [organization_id], references: [id])

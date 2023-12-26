@@ -1,5 +1,7 @@
 import { $Enums, Pet } from '@prisma/client'
 import { PetsRepository } from '../repositories/pets-repository'
+import { OrganizationsRepository } from '../repositories/organizations-repository'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
 interface CreatePetServiceRequest {
   species: string
@@ -19,12 +21,30 @@ interface CreatePetServiceResponse {
 }
 
 export class CreatePetService {
-  constructor(private petsRepository: PetsRepository) {}
+  constructor(
+    private petsRepository: PetsRepository,
+    private organizationsRepository: OrganizationsRepository,
+  ) {}
 
   async execute({
     ...data
   }: CreatePetServiceRequest): Promise<CreatePetServiceResponse> {
-    const pet = await this.petsRepository.create(data)
+    const organization = await this.organizationsRepository.findById(
+      data.organization_id,
+    )
+
+    if (!organization) {
+      throw new ResourceNotFoundError()
+    }
+
+    const { address } = organization
+
+    const petDataWithAddress = {
+      ...data,
+      address,
+    }
+
+    const pet = await this.petsRepository.create(petDataWithAddress)
     return { pet }
   }
 }
