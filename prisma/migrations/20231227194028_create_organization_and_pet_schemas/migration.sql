@@ -44,5 +44,8 @@ CREATE TABLE "organizations" (
     CONSTRAINT "organizations_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateIndex
+CREATE UNIQUE INDEX "organizations_email_key" ON "organizations"("email");
+
 -- AddForeignKey
 ALTER TABLE "pets" ADD CONSTRAINT "pets_organization_id_fkey" FOREIGN KEY ("organization_id") REFERENCES "organizations"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

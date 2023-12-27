@@ -59,7 +59,7 @@ model Organization {
   id            String   @id @default(uuid())
   name          String
   manager_name  String
-  email         String
+  email         String   @unique
   CEP           String
   address       String
   whatsapp      String

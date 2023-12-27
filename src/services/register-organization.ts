@@ -2,7 +2,6 @@ import { hash } from 'bcryptjs'
 import { OrganizationsRepository } from '@/repositories/organizations-repository'
 import { Organization } from '@prisma/client'
 import { getAddressByCEP } from '../utils/get-address-by-cep'
-import { OrganizationAlreadyExistsError } from './errors/organization-already-exists-error'
 
 interface RegisterOrganizationServiceRequest {
   name: string
@@ -28,13 +27,6 @@ export class RegisterOrganizationService {
     whatsapp,
     password,
   }: RegisterOrganizationServiceRequest): Promise<RegisterOrganizationServiceResponse> {
-    const organizationWithSameEmail =
-      await this.organizationsRepository.findByEmail(email)
-
-    if (organizationWithSameEmail) {
-      throw new OrganizationAlreadyExistsError()
-    }
-
     const { address } = await getAddressByCEP(CEP)
 
     const passwordHash = await hash(password, 6)
