@@ -34,7 +34,7 @@ enum IndependenceLevel {
   SELF_SUFFICIENT
 }
 
-//TODO: add images feature, add address feature to maximize performance
+//TODO: add images feature
 model Pet {
   id                 String            @id @default(uuid())
   species            String
@@ -69,14 +69,4 @@ model Organization {
   Pet Pet[]
 
   @@map("organizations")
-}
-
-model User {
-  id            String   @id @default(uuid())
-  name          String
-  email         String
-  password_hash String
-  created_at    DateTime @default(now())
-
-  @@map("users")
 }
