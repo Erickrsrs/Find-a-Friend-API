@@ -9,7 +9,6 @@ interface RegisterOrganizationServiceRequest {
   managerName: string
   email: string
   CEP: string
-  complement?: string
   whatsapp: string
   password: string
 }
@@ -26,7 +25,6 @@ export class RegisterOrganizationService {
     managerName,
     email,
     CEP,
-    complement,
     whatsapp,
     password,
   }: RegisterOrganizationServiceRequest): Promise<RegisterOrganizationServiceResponse> {
@@ -37,13 +35,7 @@ export class RegisterOrganizationService {
       throw new OrganizationAlreadyExistsError()
     }
 
-    let { address } = await getAddressByCEP(CEP)
-
-    if (complement) {
-      const addressParts = address.split(', ')
-      addressParts.splice(1, 0, complement)
-      address = addressParts.join(', ')
-    }
+    const { address } = await getAddressByCEP(CEP)
 
     const passwordHash = await hash(password, 6)
 

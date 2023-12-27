@@ -41,7 +41,6 @@ describe('create organization service', () => {
       managerName: 'org-manager-name',
       email: 'org@email.com',
       CEP: '12345678',
-      complement: 'org-complement',
       whatsapp: '1199999999',
       password: 'org-password',
     })
