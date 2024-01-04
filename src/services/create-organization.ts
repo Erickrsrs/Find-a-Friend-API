@@ -4,7 +4,7 @@ import { OrganizationsRepository } from '@/repositories/organizations-repository
 import { Organization } from '@prisma/client'
 import { getAddressByCEP } from '../utils/get-address-by-cep'
 
-interface RegisterOrganizationServiceRequest {
+interface CreateOrganizationServiceRequest {
   name: string
   managerName: string
   email: string
@@ -14,11 +14,11 @@ interface RegisterOrganizationServiceRequest {
   password: string
 }
 
-interface RegisterOrganizationServiceResponse {
+interface CreateOrganizationServiceResponse {
   organization: Organization
 }
 
-export class RegisterOrganizationService {
+export class CreateOrganizationService {
   constructor(
     private organizationsRepository: OrganizationsRepository,
     private addressesRepository: AddressesRepository,
@@ -32,7 +32,7 @@ export class RegisterOrganizationService {
     complement,
     whatsapp,
     password,
-  }: RegisterOrganizationServiceRequest): Promise<RegisterOrganizationServiceResponse> {
+  }: CreateOrganizationServiceRequest): Promise<CreateOrganizationServiceResponse> {
     const { address } = await getAddressByCEP(cep) // this should be received from the frontend
 
     const organizationAddress = await this.addressesRepository.create({

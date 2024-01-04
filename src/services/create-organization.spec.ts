@@ -1,6 +1,6 @@
 import { expect, it, describe, beforeEach, vi } from 'vitest'
 import { InMemoryOrganizationsRepository } from '../repositories/in-memory/in-memory-organizations-repository'
-import { RegisterOrganizationService } from './register-organization'
+import { CreateOrganizationService } from './create-organization'
 import { compare } from 'bcryptjs'
 import { AddressesRepository } from '../repositories/addresses-repository'
 import { InMemoryAddressesRepository } from '../repositories/in-memory/in-memory-addresses-repository'
@@ -24,19 +24,19 @@ vi.mock('../utils/get-address-by-cep', () => {
 
 let organizationsRepository: InMemoryOrganizationsRepository
 let addressesRepository: AddressesRepository
-let sut: RegisterOrganizationService
+let sut: CreateOrganizationService
 
 describe('create organization service', () => {
   beforeEach(() => {
     organizationsRepository = new InMemoryOrganizationsRepository()
     addressesRepository = new InMemoryAddressesRepository()
-    sut = new RegisterOrganizationService(
+    sut = new CreateOrganizationService(
       organizationsRepository,
       addressesRepository,
     )
   })
 
-  it('should be able to register an organization', async () => {
+  it('should be able to create an organization', async () => {
     const { organization } = await sut.execute({
       name: 'org-name',
       managerName: 'org-manager-name',
@@ -49,7 +49,7 @@ describe('create organization service', () => {
     expect(organization).toEqual(expect.any(Object))
   })
 
-  it('should be able to hash user password upon organization registration', async () => {
+  it('should be able to hash user password upon organization creation', async () => {
     const { organization } = await sut.execute({
       name: 'org-name',
       managerName: 'org-manager-name',
