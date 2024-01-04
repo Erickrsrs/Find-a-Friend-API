@@ -19,16 +19,15 @@ export class InMemoryOrganizationsRepository
     return organization || null
   }
 
-  async create(data: Prisma.OrganizationCreateInput) {
-    const organization = {
+  async create(data: Prisma.OrganizationUncheckedCreateInput) {
+    const organization: Organization = {
       id: randomUUID(),
       name: data.name,
       manager_name: data.manager_name,
       email: data.email,
-      CEP: data.CEP,
-      address: data.address,
       whatsapp: data.whatsapp,
       password_hash: data.password_hash,
+      address_id: data.address_id,
       created_at: new Date(),
     }
 

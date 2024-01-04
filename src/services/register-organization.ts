@@ -1,3 +1,4 @@
+import { AddressesRepository } from '@/repositories/addresses-repository'
 import { hash } from 'bcryptjs'
 import { OrganizationsRepository } from '@/repositories/organizations-repository'
 import { Organization } from '@prisma/client'
@@ -7,7 +8,8 @@ interface RegisterOrganizationServiceRequest {
   name: string
   managerName: string
   email: string
-  CEP: string
+  cep: string
+  complement?: string
   whatsapp: string
   password: string
 }
@@ -17,17 +19,26 @@ interface RegisterOrganizationServiceResponse {
 }
 
 export class RegisterOrganizationService {
-  constructor(private organizationsRepository: OrganizationsRepository) {}
+  constructor(
+    private organizationsRepository: OrganizationsRepository,
+    private addressesRepository: AddressesRepository,
+  ) {}
 
   async execute({
     name,
     managerName,
     email,
-    CEP,
+    cep,
+    complement,
     whatsapp,
     password,
   }: RegisterOrganizationServiceRequest): Promise<RegisterOrganizationServiceResponse> {
-    const { address } = await getAddressByCEP(CEP)
+    const { address } = await getAddressByCEP(cep) // this should be received from the frontend
+
+    const organizationAddress = await this.addressesRepository.create({
+      ...address,
+      complement,
+    })
 
     const passwordHash = await hash(password, 6)
 
@@ -35,8 +46,7 @@ export class RegisterOrganizationService {
       name,
       manager_name: managerName,
       email,
-      CEP,
-      address,
+      address_id: organizationAddress.id,
       whatsapp,
       password_hash: passwordHash,
     })

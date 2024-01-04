@@ -2,23 +2,38 @@ import { expect, it, describe, beforeEach, vi } from 'vitest'
 import { InMemoryOrganizationsRepository } from '../repositories/in-memory/in-memory-organizations-repository'
 import { RegisterOrganizationService } from './register-organization'
 import { compare } from 'bcryptjs'
+import { AddressesRepository } from '../repositories/addresses-repository'
+import { InMemoryAddressesRepository } from '../repositories/in-memory/in-memory-addresses-repository'
 
 // Mock the getAddressByCEP function
 vi.mock('../utils/get-address-by-cep', () => {
   return {
     getAddressByCEP: () => {
-      return { address: 'logradouro, bairro, localidade - uf' }
+      return {
+        address: {
+          postal_code: '12345678',
+          street: 'any-street',
+          neighborhood: 'any-neighborhood',
+          city: 'any-city',
+          state: 'any-state',
+        },
+      }
     },
   }
 })
 
 let organizationsRepository: InMemoryOrganizationsRepository
+let addressesRepository: AddressesRepository
 let sut: RegisterOrganizationService
 
 describe('create organization service', () => {
   beforeEach(() => {
     organizationsRepository = new InMemoryOrganizationsRepository()
-    sut = new RegisterOrganizationService(organizationsRepository)
+    addressesRepository = new InMemoryAddressesRepository()
+    sut = new RegisterOrganizationService(
+      organizationsRepository,
+      addressesRepository,
+    )
   })
 
   it('should be able to register an organization', async () => {
@@ -26,7 +41,7 @@ describe('create organization service', () => {
       name: 'org-name',
       managerName: 'org-manager-name',
       email: 'org@email.com',
-      CEP: '12345678',
+      cep: '12345678',
       whatsapp: '1199999999',
       password: 'org-password',
     })
@@ -39,7 +54,7 @@ describe('create organization service', () => {
       name: 'org-name',
       managerName: 'org-manager-name',
       email: 'org@email.com',
-      CEP: '12345678',
+      cep: '12345678',
       whatsapp: '1199999999',
       password: 'org-password',
     })

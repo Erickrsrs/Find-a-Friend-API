@@ -46,7 +46,7 @@ model Pet {
   energy             Energy
   independence_level IndependenceLevel
   requirements       String[]
-  address            String
+  city               String
   created_at         DateTime          @default(now())
 
   organization    Organization @relation(fields: [organization_id], references: [id])
@@ -60,13 +60,29 @@ model Organization {
   name          String
   manager_name  String
   email         String   @unique
-  CEP           String
-  address       String
   whatsapp      String
   password_hash String
   created_at    DateTime @default(now())
 
+  Address    Address @relation(fields: [address_id], references: [id])
+  address_id String  @unique
+
   Pet Pet[]
 
   @@map("organizations")
+}
+
+model Address {
+  id           String   @id @default(uuid())
+  postal_code  String
+  street       String
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  created_at   DateTime @default(now())
+
+  Organization Organization?
+
+  @@map("addresses")
 }

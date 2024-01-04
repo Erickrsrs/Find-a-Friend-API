@@ -18,8 +18,7 @@ describe('authenticate organization service', () => {
       name: 'org-name',
       manager_name: 'org-manager-name',
       email: 'org-email@email.org',
-      CEP: '12345678',
-      address: 'org-address',
+      address_id: '12345678',
       whatsapp: '1199999999',
       password_hash: await hash('org-password', 6),
     })
@@ -46,8 +45,7 @@ describe('authenticate organization service', () => {
       name: 'org-name',
       manager_name: 'org-manager-name',
       email: 'org-email@email.org',
-      CEP: '12345678',
-      address: 'org-address',
+      address_id: '12345678',
       whatsapp: '1199999999',
       password_hash: await hash('org-password', 6),
     })

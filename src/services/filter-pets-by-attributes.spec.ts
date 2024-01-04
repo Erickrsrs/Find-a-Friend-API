@@ -23,7 +23,7 @@ describe('filter pets by attributes service', () => {
       independence_level: 'DEPENDENT',
       requirements: ['needs a lot of love'],
       organization_id: 'organization.id',
-      address: 'logradouro, bairro, São Paulo - SP',
+      city: 'São Paulo',
     })
 
     petsRepository.create({
@@ -37,7 +37,7 @@ describe('filter pets by attributes service', () => {
       independence_level: 'DEPENDENT',
       requirements: ['not needs a lot of love'],
       organization_id: 'organization.id',
-      address: 'logradouro, bairro, São Paulo - SP',
+      city: 'São Paulo',
     })
 
     const { pets } = await sut.execute({})
@@ -58,7 +58,7 @@ describe('filter pets by attributes service', () => {
       independence_level: 'DEPENDENT',
       requirements: ['needs a lot of love'],
       organization_id: 'organization.id',
-      address: 'logradouro, bairro, São Paulo - SP',
+      city: 'São Paulo',
     })
 
     const { pets } = await sut.execute({
@@ -84,7 +84,7 @@ describe('filter pets by attributes service', () => {
       independence_level: 'DEPENDENT',
       requirements: ['needs a lot of love'],
       organization_id: 'organization.id',
-      address: 'logradouro, bairro, São Paulo - SP',
+      city: 'São Paulo',
     })
 
     const { pets } = await sut.execute({

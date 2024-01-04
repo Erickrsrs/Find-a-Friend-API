@@ -11,15 +11,7 @@ export class InMemoryPetsRepository implements PetsRepository {
   }
 
   async findByCity(city: string) {
-    const cityRegex = /[^,]*,\s*([^,-]*)\s*-/
-
-    return this.items.filter((pet) => {
-      const cityMatch = pet.address.match(cityRegex)
-
-      return (
-        cityMatch && cityMatch[1].trim().toLowerCase() === city.toLowerCase()
-      )
-    })
+    return this.items.filter((pet) => pet.city === city)
   }
 
   async filterByAttributes(filter: FilterPetsByAttributesServiceRequest) {
@@ -50,7 +42,7 @@ export class InMemoryPetsRepository implements PetsRepository {
 
       requirements: (data.requirements as string[]) || [],
       organization_id: data.organization_id,
-      address: data.address,
+      city: data.city,
       created_at: new Date(),
     }
 

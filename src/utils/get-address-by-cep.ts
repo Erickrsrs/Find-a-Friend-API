@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import axios from 'axios'
 
 interface ViacepResponse {
@@ -15,10 +16,22 @@ interface ViacepResponse {
 
 export async function getAddressByCEP(CEP: string) {
   try {
-    const { uf, localidade, bairro, logradouro }: ViacepResponse =
-      await axios.get(`https://viacep.com.br/ws/${CEP}/json/`)
+    const {
+      cep: postal_code,
+      logradouro: street,
+      bairro: neighborhood,
+      localidade: city,
+      uf: state,
+    }: ViacepResponse = await axios.get(`https://viacep.com.br/ws/${CEP}/json/`)
 
-    const address = `${logradouro}, ${bairro}, ${localidade} - ${uf}`
+    const address = {
+      postal_code,
+      street,
+      neighborhood,
+      city,
+      state,
+    }
+
     return { address }
   } catch (err) {
     throw new Error('CEP not found')

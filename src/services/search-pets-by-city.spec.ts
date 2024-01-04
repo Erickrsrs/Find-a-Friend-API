@@ -23,13 +23,11 @@ describe('search pet by city service', () => {
       independence_level: 'DEPENDENT',
       requirements: ['needs a lot of love'],
       organization_id: 'organization.id',
-      address: 'logradouro, bairro, São Paulo - SP',
+      city: 'São Paulo',
     })
-
     const { pets } = await sut.execute({
       city: 'São Paulo',
     })
-
     expect(pets).toEqual(expect.any(Array))
     expect(pets).toHaveLength(1)
   })
