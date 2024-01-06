@@ -2,7 +2,7 @@ import { AddressesRepository } from '@/repositories/addresses-repository'
 import { hash } from 'bcryptjs'
 import { OrganizationsRepository } from '@/repositories/organizations-repository'
 import { Organization } from '@prisma/client'
-import { getAddressByCEP } from '../utils/get-address-by-cep'
+import { getAddressByCep } from '../utils/get-address-by-cep'
 
 interface CreateOrganizationServiceRequest {
   name: string
@@ -33,7 +33,7 @@ export class CreateOrganizationService {
     whatsapp,
     password,
   }: CreateOrganizationServiceRequest): Promise<CreateOrganizationServiceResponse> {
-    const { address } = await getAddressByCEP(cep) // this should be received from the frontend
+    const { address } = await getAddressByCep(cep) // this should be received from the frontend
 
     const organizationAddress = await this.addressesRepository.create({
       ...address,

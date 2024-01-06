@@ -14,7 +14,7 @@ interface ViacepResponse {
   siafi: string
 }
 
-export async function getAddressByCEP(CEP: string) {
+export async function getAddressByCep(cep: string) {
   try {
     const {
       cep: postal_code,
@@ -22,7 +22,9 @@ export async function getAddressByCEP(CEP: string) {
       bairro: neighborhood,
       localidade: city,
       uf: state,
-    }: ViacepResponse = await axios.get(`https://viacep.com.br/ws/${CEP}/json/`)
+    }: ViacepResponse = (
+      await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+    ).data
 
     const address = {
       postal_code,
