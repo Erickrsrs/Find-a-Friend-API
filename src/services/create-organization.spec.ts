@@ -8,7 +8,7 @@ import { InMemoryAddressesRepository } from '../repositories/in-memory/in-memory
 // Mock the getAddressByCEP function
 vi.mock('../utils/get-address-by-cep', () => {
   return {
-    getAddressByCEP: () => {
+    getAddressByCep: () => {
       return {
         address: {
           postal_code: '12345678',
