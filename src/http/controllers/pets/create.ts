@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-import { $Enums } from '@prisma/client'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 import { MakeCreatePetService } from '@/services/factories/make-create-pet-service'
@@ -38,10 +37,10 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
       race,
       name,
       about,
-      age: age as $Enums.Age,
-      size: size as $Enums.Size,
-      energy: energy as $Enums.Energy,
-      independence_level: independence_level as $Enums.IndependenceLevel,
+      age,
+      size,
+      energy,
+      independence_level,
       requirements,
       organization_id: request.user.sub,
     })
