@@ -6,7 +6,7 @@ import { app } from '@/app'
 // eslint-disable-next-line no-unused-expressions
 mockGetAddressByCep
 
-describe('create controller (e2e)', () => {
+describe('organizations create controller (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -15,7 +15,7 @@ describe('create controller (e2e)', () => {
     await app.close()
   })
 
-  it('should be able to authenticate an organization', async () => {
+  it('should be able to create an organization', async () => {
     const response = await request(app.server).post('/organizations').send({
       name: 'Organization Name',
       managerName: 'Manager Name',

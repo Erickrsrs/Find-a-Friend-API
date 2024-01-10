@@ -6,7 +6,7 @@ import { app } from '@/app'
 // eslint-disable-next-line no-unused-expressions
 mockGetAddressByCep
 
-describe('authenticate controller (e2e)', () => {
+describe('organizations authenticate controller (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
