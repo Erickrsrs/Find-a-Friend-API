@@ -6,7 +6,7 @@ import { app } from '@/app'
 // eslint-disable-next-line no-unused-expressions
 mockGetAddressByCep
 
-describe('authenticate controller (e2e)', () => {
+describe('create controller (e2e)', () => {
   beforeAll(async () => {
     await app.ready()
   })
@@ -16,7 +16,7 @@ describe('authenticate controller (e2e)', () => {
   })
 
   it('should be able to authenticate an organization', async () => {
-    await request(app.server).post('/organizations').send({
+    const response = await request(app.server).post('/organizations').send({
       name: 'Organization Name',
       managerName: 'Manager Name',
       email: 'organization@example.org',
@@ -26,14 +26,10 @@ describe('authenticate controller (e2e)', () => {
       password: 'organization-password',
     })
 
-    const response = await request(app.server).post('/authenticate').send({
-      email: 'organization@example.org',
-      password: 'organization-password',
-    })
-
-    expect(response.statusCode).toEqual(200)
-    expect(response.body).toEqual({
-      token: expect.any(String),
-    })
+    expect(response.statusCode).toEqual(201)
+    expect(response.body.organization).toHaveProperty(
+      'address_id',
+      expect.any(String),
+    )
   })
 })
