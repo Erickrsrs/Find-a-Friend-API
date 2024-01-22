@@ -1,4 +1,6 @@
-import { Pet } from '@prisma/client'
+import { AddressesRepository } from './../repositories/addresses-repository'
+import { Address, Organization, Pet } from '@prisma/client'
+import { OrganizationsRepository } from './../repositories/organizations-repository'
 import { PetsRepository } from '../repositories/pets-repository'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 
@@ -8,10 +10,16 @@ interface GetPetDetailsServiceRequest {
 
 interface GetPetDetailsServiceResponse {
   pet: Pet
+  organization: Organization
+  address: Address
 }
 
 export class GetPetDetailsService {
-  constructor(private petsRepository: PetsRepository) {}
+  constructor(
+    private petsRepository: PetsRepository,
+    private organizationsRepository: OrganizationsRepository,
+    private addressesRepository: AddressesRepository,
+  ) {}
 
   async execute({
     petId,
@@ -22,6 +30,22 @@ export class GetPetDetailsService {
       throw new ResourceNotFoundError()
     }
 
-    return { pet }
+    const organization = await this.organizationsRepository.findById(
+      pet.organization_id,
+    )
+
+    if (!organization) {
+      throw new ResourceNotFoundError()
+    }
+
+    const address = await this.addressesRepository.findById(
+      organization.address_id,
+    )
+
+    if (!address) {
+      throw new ResourceNotFoundError()
+    }
+
+    return { pet, organization, address }
   }
 }

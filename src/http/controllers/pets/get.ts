@@ -13,9 +13,18 @@ export async function get(request: FastifyRequest, reply: FastifyReply) {
   try {
     const getPetDetailsService = MakeGetPetDetailsService()
 
-    const { pet } = await getPetDetailsService.execute({ petId })
+    const { pet, organization, address } = await getPetDetailsService.execute({
+      petId,
+    })
 
-    return reply.status(200).send({ pet })
+    return reply.status(200).send({
+      pet,
+      organization: {
+        ...organization,
+        password_hash: undefined,
+      },
+      address,
+    })
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
       return reply.status(400).send({ message: err.message })
